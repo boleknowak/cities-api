@@ -1,7 +1,5 @@
 package main
 
-// TODO: add endpoints: countries, states
-
 import (
 	"fmt"
 	"log"
@@ -95,7 +93,14 @@ func getCityByQuery(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	query := r.URL.Query().Get("q")
-	limit := r.URL.Query().Get("limit")
+	if query == "" {
+		query = r.URL.Query().Get("query")
+	}
+
+	limit := r.URL.Query().Get("l")
+	if limit == "" {
+		limit = r.URL.Query().Get("limit")
+	}
 
 	if limit == "" {
 		limit = "10"
@@ -165,6 +170,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	environmentPath := filepath.Join(dir, ".env")
 	err = godotenv.Load(environmentPath)
 	if err != nil {
@@ -174,7 +180,7 @@ func main() {
 	app_port := os.Getenv("APP_PORT")
 
 	time := fmt.Sprintf("%s", time.Now().Format("2006-01-02 15:04:05"))
-	fmt.Printf("Starting server on port %s...\nStart time: %s", app_port, time)
+	fmt.Printf("Starting server on port %s...\nStart time: %s\n", app_port, time)
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", getStatus).Methods("GET")

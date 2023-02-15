@@ -9,14 +9,14 @@ Cities-API is a powerful and efficient open-source project written in Golang tha
 
 #### Search by city name
 
-```http
+```text
   GET /city
 ```
 
-| Parameter | Type     | Description                        | Demo                                                                               |
-| :-------- | :------- | :--------------------------------- | :--------------------------------------------------------------------------------- |
-| `q`       | `string` | **Required**. For example: Albuque | [/city?q=Albuque](https://cities-api.znanapraca.pl/city?q=Albuque)                 |
-| `limit`   | `string` | **Optional**. For example: 2       | [/city?q=Los+Ang&limit=2](https://cities-api.znanapraca.pl/city?q=Los+Ang&limit=2) |
+| Parameter     | Type     | Description                        | Demo                                                                               |
+| :------------ | :------- | :--------------------------------- | :--------------------------------------------------------------------------------- |
+| `q` / `query` | `string` | **Required**. For example: Albuque | [/city?q=Albuque](https://cities-api.znanapraca.pl/city?q=Albuque)                 |
+| `l` / `limit` | `string` | **Optional**. For example: 2       | [/city?q=Los+Ang&limit=2](https://cities-api.znanapraca.pl/city?q=Los+Ang&limit=2) |
 
 ### Example response
 
@@ -57,7 +57,7 @@ More functions will be added Soon™.
 - [ ] Add more endpoints
 - [ ] Add Installation instructions
 - [ ] Add tests
-- [ ] Add demo link
+- [x] Add demo link
 
 ## License
 
