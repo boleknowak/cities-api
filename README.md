@@ -24,26 +24,26 @@ More functions will be added Soon™.
 
 ```json
 [
-	{
-		"id": "111130",
-		"name": "Albuquerque",
-		"country_code": "US",
-		"lat": 35.08449,
-		"lng": -106.65114,
-		"country": {
-			"id": "233",
-			"name": "United States",
-			"iso2": "US",
-			"phonecode": "1",
-			"native": "United States",
-			"emoji": "🇺🇸"
-		},
-		"state": {
-			"id": "1423",
-			"name": "New Mexico",
-			"iso2": "NM"
-		}
-	}
+ {
+  "id": "111130",
+  "name": "Albuquerque",
+  "country_code": "US",
+  "lat": 35.08449,
+  "lng": -106.65114,
+  "country": {
+   "id": "233",
+   "name": "United States",
+   "iso2": "US",
+   "phonecode": "1",
+   "native": "United States",
+   "emoji": "🇺🇸"
+  },
+  "state": {
+   "id": "1423",
+   "name": "New Mexico",
+   "iso2": "NM"
+  }
+ }
 ]
 ```
 
