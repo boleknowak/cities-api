@@ -54,10 +54,10 @@ More functions will be added Soon™.
 
 ## TODO
 
-[] Add more endpoints
-[] Add Installation instructions
-[] Add tests
-[] Add demo link
+[ ] Add more endpoints
+[ ] Add Installation instructions
+[ ] Add tests
+[ ] Add demo link
 
 ## License
 
