@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"encoding/json"
@@ -160,7 +161,7 @@ func getCityByQuery(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load(filepath.Join(".", ".env"))
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
