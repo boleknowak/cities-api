@@ -52,6 +52,13 @@ More functions will be added Soon™.
 - [Data Source](https://github.com/dr5hn/countries-states-cities-database)
 - Database Dump is available in the cities_api.gz file.
 
+## TODO
+
+[] Add more endpoints
+[] Add Installation instructions
+[] Add tests
+[] Add demo link
+
 ## License
 
 The Cities-API is open-sourced software licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
