@@ -20,6 +20,33 @@ Cities-API is a powerful and efficient open-source project written in Golang tha
 
 More functions will be added Soon™.
 
+### Example response
+
+```json
+[
+	{
+		"id": "111130",
+		"name": "Albuquerque",
+		"country_code": "US",
+		"lat": 35.08449,
+		"lng": -106.65114,
+		"country": {
+			"id": "233",
+			"name": "United States",
+			"iso2": "US",
+			"phonecode": "1",
+			"native": "United States",
+			"emoji": "🇺🇸"
+		},
+		"state": {
+			"id": "1423",
+			"name": "New Mexico",
+			"iso2": "NM"
+		}
+	}
+]
+```
+
 ## Data
 
 - [Data Source](https://github.com/dr5hn/countries-states-cities-database)
@@ -28,3 +55,5 @@ More functions will be added Soon™.
 ## License
 
 The Cities-API is open-sourced software licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
+
+PS. This is my first project in Golang, so please be kind. :)

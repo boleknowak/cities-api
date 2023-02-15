@@ -18,19 +18,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type Config struct {
-	Database struct {
-		Host     string `json:"host"`
-		Port     int    `json:"port"`
-		Username string `json:"username"`
-		Password string `json:"password"`
-		Name     string `json:"name"`
-	} `json:"database"`
-	Server struct {
-		Port int `json:"port"`
-	} `json:"server"`
-}
-
 type City struct {
 	Id          string  `json:"id"`
 	Name        string  `json:"name"`
@@ -55,8 +42,6 @@ type State struct {
 	Name string `json:"name"`
 	Iso2 string `json:"iso2"`
 }
-
-var config Config
 
 func errorResponse(w http.ResponseWriter, message string) {
 	resp := make(map[string]string)
@@ -174,25 +159,7 @@ func getCityByQuery(w http.ResponseWriter, r *http.Request) {
 	w.Write(json)
 }
 
-func setup() {
-	file, err := os.Open("config.json")
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	defer file.Close()
-
-	decoder := json.NewDecoder(file)
-	err = decoder.Decode(&config)
-
-	if err != nil {
-		panic(err.Error())
-	}
-}
-
 func main() {
-	setup()
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
