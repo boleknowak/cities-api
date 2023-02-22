@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -44,6 +45,16 @@ type State struct {
 	Iso2 string `json:"iso2"`
 }
 
+type CacheKey struct {
+	Query string
+}
+
+type CacheData struct {
+	Data []City
+}
+
+var cacheDataMap map[CacheKey]CacheData
+
 func errorResponse(w http.ResponseWriter, message string) {
 	resp := make(map[string]string)
 	resp["status"] = "error"
@@ -75,6 +86,11 @@ func getStatus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Write(jsonResp)
+}
+
+func GetCacheData(key CacheKey) (*CacheData, error) {
+	data := cacheDataMap[key]
+	return &data, nil
 }
 
 func getCityByQuery(w http.ResponseWriter, r *http.Request) {
@@ -119,10 +135,40 @@ func getCityByQuery(w http.ResponseWriter, r *http.Request) {
 	}
 
 	query = strings.TrimSpace(query)
+
+	cache_size := os.Getenv("CACHE_SIZE")
+	cache_size_int, err := strconv.Atoi(cache_size)
+
+	if len(cacheDataMap) > cache_size_int {
+		cacheDataMap = make(map[CacheKey]CacheData)
+	}
+
+	key := CacheKey{Query: query}
+	data, err := GetCacheData(key)
+
+	if err != nil {
+		errorResponse(w, err.Error())
+		return
+	}
+
+	if data.Data != nil {
+		jsonResp, err := json.Marshal(data.Data)
+
+		if err != nil {
+			errorResponse(w, err.Error())
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Write(jsonResp)
+		return
+	}
+
 	keyword := fmt.Sprintf("'%s%%'", query)
 	db_query := fmt.Sprintf(`SELECT cities.id, cities.name, cities.country_code, cities.latitude, cities.longitude, cities.country_id, countries.name as c_name, countries.iso2 as c_iso2, countries.phonecode as c_phonecode, countries.native as c_native, countries.emoji as c_emoji, states.id as s_id, states.name as s_name, states.iso2 as s_iso2 FROM cities INNER JOIN countries ON cities.country_id=countries.id RIGHT JOIN states ON cities.state_id=states.id WHERE cities.name LIKE %s LIMIT %s`, keyword, limit)
 	rows, err := db.Query(db_query)
-	cities := []*City{}
+	cities := []City{}
 
 	if err != nil {
 		errorResponse(w, err.Error())
@@ -154,13 +200,15 @@ func getCityByQuery(w http.ResponseWriter, r *http.Request) {
 		country := Country{country_id.String, c_name.String, c_iso2.String, c_phonecode.String, c_native.String, c_emoji.String}
 		city := &City{id.String, name.String, country_code.String, latitude.Float64, longitude.Float64, country, state}
 
-		cities = append(cities, city)
+		cities = append(cities, *city)
 	}
 
 	if len(cities) == 0 {
 		errorResponse(w, "cities_not_found")
 		return
 	}
+
+	cacheDataMap[key] = CacheData{cities}
 
 	json, err := json.Marshal(cities)
 	if err != nil {
@@ -186,6 +234,8 @@ func main() {
 	}
 
 	app_port := os.Getenv("APP_PORT")
+
+	cacheDataMap = make(map[CacheKey]CacheData)
 
 	time := fmt.Sprintf("%s", time.Now().Format("2006-01-02 15:04:05"))
 	fmt.Printf("Starting server on port %s...\nStart time: %s\n", app_port, time)
