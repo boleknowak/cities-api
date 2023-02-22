@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strings"
 	"time"
 
 	"encoding/json"
@@ -111,6 +113,12 @@ func getCityByQuery(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if match, _ := regexp.MatchString(`^[\p{L} -]+$`, query); !match {
+		errorResponse(w, "invalid_query_parameter")
+		return
+	}
+
+	query = strings.TrimSpace(query)
 	keyword := fmt.Sprintf("'%s%%'", query)
 	db_query := fmt.Sprintf(`SELECT cities.id, cities.name, cities.country_code, cities.latitude, cities.longitude, cities.country_id, countries.name as c_name, countries.iso2 as c_iso2, countries.phonecode as c_phonecode, countries.native as c_native, countries.emoji as c_emoji, states.id as s_id, states.name as s_name, states.iso2 as s_iso2 FROM cities INNER JOIN countries ON cities.country_id=countries.id RIGHT JOIN states ON cities.state_id=states.id WHERE cities.name LIKE %s LIMIT %s`, keyword, limit)
 	rows, err := db.Query(db_query)
