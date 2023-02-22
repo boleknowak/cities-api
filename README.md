@@ -1,9 +1,9 @@
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-# Cities API
+# GeoAPI
 
-Cities-API is a powerful and efficient open-source project written in Golang that provides a simple yet effective way to search for cities in a MySQL database. This project is useful for applications that need to query a large database of cities in real-time.
+GeoAPI is a powerful and efficient open-source project written in Golang that provides a simple yet effective way to search for cities in a MySQL database. This project is useful for applications that need to query a large database of cities in real-time.
 
 ## API Reference
 
@@ -15,8 +15,8 @@ Cities-API is a powerful and efficient open-source project written in Golang tha
 
 | Parameter     | Type     | Description                        | Demo                                                                               |
 | :------------ | :------- | :--------------------------------- | :--------------------------------------------------------------------------------- |
-| `q` / `query` | `string` | **Required**. For example: Albuque | [/city?q=Albuque](https://cities-api.znanapraca.pl/city?q=Albuque)                 |
-| `l` / `limit` | `string` | **Optional**. For example: 2       | [/city?q=Los+Ang&limit=2](https://cities-api.znanapraca.pl/city?q=Los+Ang&limit=2) |
+| `q` / `query` | `string` | **Required**. For example: Albuque | [/city?q=Albuque](https://geoapi.znanapraca.pl/city?q=Albuque)                 |
+| `l` / `limit` | `string` | **Optional**. For example: 2       | [/city?q=Los+Ang&limit=2](https://geoapi.znanapraca.pl/city?q=Los+Ang&limit=2) |
 
 ### Example response
 
@@ -61,6 +61,6 @@ More functions will be added Soon™.
 
 ## License
 
-The Cities-API is open-sourced software licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
+The GeoAPI is open-sourced software licensed under the [MIT license](https://choosealicense.com/licenses/mit/).
 
 PS. This is my first project in Golang, so please be kind. :)

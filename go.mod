@@ -1,4 +1,4 @@
-module city-go
+module geoapi
 
 go 1.19
 
